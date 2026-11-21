@@ -1,0 +1,9 @@
+A plant engineer received a spearphishing email with a malicious Excel attachment and enabled macros, which launched an encoded PowerShell command on his corporate laptop.
+The attacker dumped credentials from LSASS with Mimikatz and found a stored vendor VPN password.
+Using the stolen VPN credentials, they logged in remotely and connected to the HMI over TightVNC, which had no MFA.
+From the HMI they scanned the OT network and identified the Modbus gateway, the ControlLogix PLC and the DNP3 RTU.
+They logged in to the Modbus gateway with its default password over telnet.
+At 02:13 on Saturday they sent unauthorized Modbus write commands that changed the chlorine pump setpoints and suppressed the low-chlorine alarms.
+They also sent a DNP3 cold restart to the RTU at the north booster station.
+Operators could not see the correct chlorine readings for about forty minutes and had to switch to manual control.
+The attacker deleted Windows event logs on the HMI before disconnecting.

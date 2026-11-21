@@ -1,0 +1,456 @@
+{
+  "format": "attack-incident-mapper",
+  "version": 1,
+  "name": "Example Water Treatment Plant incident",
+  "saved": "2026-11-21T01:18:50.088Z",
+  "data": {
+    "enterprise": "2026-10-13",
+    "ics": "2026-10-13"
+  },
+  "domains": [
+    "enterprise",
+    "ics"
+  ],
+  "incident": "A plant engineer received a spearphishing email with a malicious Excel attachment and enabled macros, which launched an encoded PowerShell command on his corporate laptop.\nThe attacker dumped credentials from LSASS with Mimikatz and found a stored vendor VPN password.\nUsing the stolen VPN credentials, they logged in remotely and connected to the HMI over TightVNC, which had no MFA.\nFrom the HMI they scanned the OT network and identified the Modbus gateway, the ControlLogix PLC and the DNP3 RTU.\nThey logged in to the Modbus gateway with its default password over telnet.\nAt 02:13 on Saturday they sent unauthorized Modbus write commands that changed the chlorine pump setpoints and suppressed the low-chlorine alarms.\nThey also sent a DNP3 cold restart to the RTU at the north booster station.\nOperators could not see the correct chlorine readings for about forty minutes and had to switch to manual control.\nThe attacker deleted Windows event logs on the HMI before disconnecting.\n",
+  "state": {
+    "steps": [
+      {
+        "n": 1,
+        "text": "A plant engineer received a spearphishing email with a malicious Excel attachment and enabled macros, which launched an encoded PowerShell command on his corporate laptop.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T0865",
+            "score": 18,
+            "conf": "high",
+            "why": "phrase: “spearphish”, “malicious Excel”; text similarity 32.3",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1566.001",
+            "score": 12,
+            "conf": "high",
+            "why": "phrase: “malicious Excel”; text similarity 45.2",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1204.002",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “macros”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1059.005",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “macros”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0863",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “macros”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1059.001",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “PowerShell”",
+            "src": "rule",
+            "on": true
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "text": "The attacker dumped credentials from LSASS with Mimikatz and found a stored vendor VPN password.",
+        "techs": [
+          {
+            "key": "enterprise",
+            "id": "T1003.001",
+            "score": 13.5,
+            "conf": "high",
+            "why": "phrase: “dumped credential”; text similarity 26.6; used by a named threat in this incident",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1552.001",
+            "score": 12,
+            "conf": "high",
+            "why": "phrase: “stored vendor VPN password”; text similarity 18.6",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1555",
+            "score": 7.5,
+            "conf": "high",
+            "why": "phrase: “stored vendor VPN password”; used by a named threat in this incident",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1003.004",
+            "score": 7.5,
+            "conf": "low",
+            "why": "text similarity 19.3; used by a named threat in this incident",
+            "src": "text",
+            "on": false
+          },
+          {
+            "key": "enterprise",
+            "id": "T1003.002",
+            "score": 7.5,
+            "conf": "low",
+            "why": "text similarity 19.2; used by a named threat in this incident",
+            "src": "text",
+            "on": false
+          },
+          {
+            "key": "enterprise",
+            "id": "T1003.006",
+            "score": 7.22,
+            "conf": "low",
+            "why": "text similarity 17.2; used by a named threat in this incident",
+            "src": "text",
+            "on": false
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "text": "Using the stolen VPN credentials, they logged in remotely and connected to the HMI over TightVNC, which had no MFA.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T0822",
+            "score": 12,
+            "conf": "high",
+            "why": "phrase: “VPN credentials, they logged in remotely”, “VNC”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1133",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “VPN credentials, they logged in remotely”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1078",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “stolen VPN credentials”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0859",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “stolen VPN credentials”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1219",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “VNC”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0886",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “VNC”",
+            "src": "rule",
+            "on": true
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "text": "From the HMI they scanned the OT network and identified the Modbus gateway, the ControlLogix PLC and the DNP3 RTU.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T0846",
+            "score": 12,
+            "conf": "high",
+            "why": "phrase: “scanned the OT network”, “identified the Modbus gateway”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1046",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “scanned the OT network”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0846.001",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “scanned the OT network”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1018",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “identified the Modbus gateway”",
+            "src": "rule",
+            "on": true
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "text": "They logged in to the Modbus gateway with its default password over telnet.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T1694.001",
+            "score": 9.12,
+            "conf": "high",
+            "why": "phrase: “default password”; text similarity 9.3",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1078.001",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “default password”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1021",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “telnet”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0886",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “telnet”",
+            "src": "rule",
+            "on": true
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "text": "At 02:13 on Saturday they sent unauthorized Modbus write commands that changed the chlorine pump setpoints and suppressed the low-chlorine alarms.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T1692.001",
+            "score": 10.77,
+            "conf": "high",
+            "why": "phrase: “unauthorized Modbus”; text similarity 14.3",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0831",
+            "score": 9.83,
+            "conf": "high",
+            "why": "phrase: “unauthorized Modbus”; text similarity 11.5",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0878",
+            "score": 9.26,
+            "conf": "high",
+            "why": "phrase: “suppressed the low-chlorine alarms”; text similarity 9.8",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0836",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “changed the chlorine pump setpoints”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1496.003",
+            "score": 4.03,
+            "conf": "low",
+            "why": "text similarity 12.1",
+            "src": "text",
+            "on": false
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "text": "They also sent a DNP3 cold restart to the RTU at the north booster station.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T0816",
+            "score": 14.88,
+            "conf": "high",
+            "why": "phrase: “restart to the RTU”, “cold restart”; text similarity 8.6",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1529",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “restart to the RTU”",
+            "src": "rule",
+            "on": true
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "text": "Operators could not see the correct chlorine readings for about forty minutes and had to switch to manual control.",
+        "techs": [
+          {
+            "key": "ics",
+            "id": "T0829",
+            "score": 9.87,
+            "conf": "high",
+            "why": "phrase: “Operators could not see”; text similarity 11.6",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0815",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “Operators could not see”",
+            "src": "rule",
+            "on": true
+          }
+        ]
+      },
+      {
+        "n": 9,
+        "text": "The attacker deleted Windows event logs on the HMI before disconnecting.",
+        "techs": [
+          {
+            "key": "enterprise",
+            "id": "T1685.005",
+            "score": 12,
+            "conf": "high",
+            "why": "phrase: “deleted Windows event logs”; text similarity 52.7",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1070",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “deleted Windows event logs”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "ics",
+            "id": "T0872",
+            "score": 6,
+            "conf": "medium",
+            "why": "phrase: “deleted Windows event logs”",
+            "src": "rule",
+            "on": true
+          },
+          {
+            "key": "enterprise",
+            "id": "T1685.001",
+            "score": 6,
+            "conf": "medium",
+            "why": "text similarity 35.2",
+            "src": "text",
+            "on": true
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "key": "enterprise",
+        "id": "S0002",
+        "name": "Mimikatz",
+        "kind": "software",
+        "matched": "Mimikatz",
+        "url": "https://attack.mitre.org/software/S0002",
+        "tech": [
+          "T1003.001",
+          "T1003.002",
+          "T1003.004",
+          "T1003.006",
+          "T1098",
+          "T1134.005",
+          "T1207",
+          "T1547.005",
+          "T1550.002",
+          "T1550.003",
+          "T1552.004",
+          "T1555",
+          "T1555.003",
+          "T1555.004",
+          "T1558.001",
+          "T1558.002",
+          "T1649"
+        ]
+      }
+    ],
+    "source": "local",
+    "extra": [],
+    "gaps": []
+  }
+}
